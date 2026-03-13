@@ -29,9 +29,7 @@ cd ~/.claude/skills/cfcu-skills && git pull
 
 Once installed, invoke any skill via slash command in Claude Code:
 ```
-/deploy
-/code-review
-/pr-summary
+/testrail-test-cases
 ```
 
 ## Contributing
