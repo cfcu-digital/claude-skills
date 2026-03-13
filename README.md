@@ -6,9 +6,6 @@ Shared [Claude Code](https://claude.ai/claude-code) skills library for the cfcu-
 
 | Skill | Description |
 |-------|-------------|
-| [deploy](./skills/deploy/) | Deploy applications and services following team runbooks |
-| [code-review](./skills/code-review/) | Consistent code review against team standards |
-| [pr-summary](./skills/pr-summary/) | Generate structured PR descriptions |
 | [testrail-test-cases](./skills/testrail-test-cases/) | Generate TestRail-importable CSV test cases by visually examining the live digital banking experience |
 
 ## Installation
