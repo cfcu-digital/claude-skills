@@ -10,20 +10,33 @@ Shared [Claude Code](https://claude.ai/claude-code) skills library for the cfcu-
 
 ## Installation
 
-Clone into your personal skills directory (available across all your projects):
+Clone the repo to `~/.claude/cfcu-skills/`, then symlink each skill into the directory Claude Code scans:
+
 ```bash
-git clone https://github.com/cfcu-digital/claude-skills ~/.claude/skills/cfcu-skills
+git clone https://github.com/cfcu-digital/claude-skills ~/.claude/cfcu-skills
+
+# Symlink all skills at once
+for dir in ~/.claude/cfcu-skills/skills/*/; do
+  ln -s "$dir" ~/.claude/skills/"$(basename "$dir")"
+done
 ```
 
-Or clone into a specific project (scoped to that project only):
+> **Why symlinks?** Claude Code loads skills from `~/.claude/skills/<skill-name>/SKILL.md`. The repo stores skills under a `skills/` subdirectory for organization, so we symlink each one into the expected location.
+
+For a **project-scoped** install (available only in one repo):
 ```bash
-git clone https://github.com/cfcu-digital/claude-skills .claude/skills/cfcu-skills
+git clone https://github.com/cfcu-digital/claude-skills .claude/cfcu-skills
+
+for dir in .claude/cfcu-skills/skills/*/; do
+  ln -s "$(pwd)/$dir" .claude/skills/"$(basename "$dir")"
+done
 ```
 
 ### Keeping skills up to date
 ```bash
-cd ~/.claude/skills/cfcu-skills && git pull
+cd ~/.claude/cfcu-skills && git pull
 ```
+(Symlinks don't need to be recreated — they point into the repo directory.)
 
 ## Using a Skill
 

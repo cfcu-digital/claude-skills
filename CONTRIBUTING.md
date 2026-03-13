@@ -48,6 +48,6 @@
 - Include concrete examples in the skill body
 - Test your skill locally before opening a PR:
   ```bash
-  cp -r skills/your-skill ~/.claude/skills/your-skill
-  # then test in Claude Code
+  ln -s "$(pwd)/skills/your-skill" ~/.claude/skills/your-skill
+  # then test in Claude Code; remove with: rm ~/.claude/skills/your-skill
   ```
