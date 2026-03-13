@@ -10,11 +10,6 @@ Shared [Claude Code](https://claude.ai/claude-code) skills library for the cfcu-
 
 ## Installation
 
-### Option A: Team/Enterprise (recommended)
-If your org is on a Claude Team or Enterprise plan, an admin can upload each skill zip at:
-**Organization settings → Skills → + Add**
-
-### Option B: Manual clone
 Clone into your personal skills directory (available across all your projects):
 ```bash
 git clone https://github.com/cfcu-digital/claude-skills ~/.claude/skills/cfcu-skills
