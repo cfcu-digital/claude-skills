@@ -1,0 +1,57 @@
+name: Validate Skills
+
+on:
+  pull_request:
+    paths:
+      - 'skills/**/SKILL.md'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate SKILL.md frontmatter
+        run: |
+          set -e
+          ERRORS=0
+
+          for skill_file in skills/**/SKILL.md; do
+            echo "Checking: $skill_file"
+
+            # Check file exists and has frontmatter delimiters
+            if ! grep -q "^---$" "$skill_file"; then
+              echo "  ERROR: Missing frontmatter (---) in $skill_file"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+
+            # Extract frontmatter block
+            FRONTMATTER=$(awk '/^---$/{f++} f==1{print} f==2{exit}' "$skill_file")
+
+            # Check required fields
+            for field in "name:" "description:" "allowed-tools:"; do
+              if ! echo "$FRONTMATTER" | grep -q "^$field"; then
+                echo "  ERROR: Missing required field '$field' in $skill_file"
+                ERRORS=$((ERRORS + 1))
+              fi
+            done
+
+            # Check name uses kebab-case (no spaces, no uppercase)
+            NAME=$(echo "$FRONTMATTER" | grep "^name:" | sed 's/name: *//')
+            if echo "$NAME" | grep -qP '[A-Z ]'; then
+              echo "  ERROR: 'name' must be kebab-case (no spaces or uppercase) in $skill_file"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            echo "  OK"
+          done
+
+          if [ $ERRORS -gt 0 ]; then
+            echo ""
+            echo "Found $ERRORS error(s). Please fix before merging."
+            exit 1
+          fi
+
+          echo ""
+          echo "All skills valid."
